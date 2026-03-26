@@ -1,0 +1,82 @@
+.app-container {
+  padding: 20px;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #18181b, #a1a1aa);
+  color: white;
+  font-family: sans-serif;
+}
+
+.title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.task-bar {
+  display: flex;
+  gap: 10px;
+  max-width: 600px;
+  margin: 0 auto 30px;
+}
+
+.task-bar input,
+.task-bar select {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  flex: 1;
+}
+
+.task-bar button {
+  padding: 10px 20px;
+  background: linear-gradient(to right, #6366f1, #a855f7);
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.board {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  justify-content: center;
+}
+
+.column {
+  width: 250px;
+  background: #27272a;
+  border-radius: 10px;
+  border-top: 4px solid;
+}
+
+.column-header {
+  padding: 10px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+
+.column-body {
+  padding: 10px;
+  min-height: 200px;
+}
+
+.task {
+  background: #3f3f46;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  cursor: grab;
+}
+
+.close {
+  padding: 5px 10px;
+  background: linear-gradient(to right, #c93a3a, #8b0e0e);
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
