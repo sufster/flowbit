@@ -112,7 +112,7 @@ export default function App() {
 
   return (
     <div className="app-container">
-      <h1>Kanban Board</h1>
+      <h1 className="title">Kanban Board</h1>
 
       {/* Add Task */}
       <div className="task-bar">
@@ -182,7 +182,7 @@ export default function App() {
                       item.id
                     )
                   }
-                >
+                className="close">
                   X
                 </button>
               </div>
