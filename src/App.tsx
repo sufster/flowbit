@@ -111,11 +111,11 @@ export default function App() {
   };
 
   return (
-    <div style={{ padding: 20 }}>
+    <div className="app-container">
       <h1>Kanban Board</h1>
 
       {/* Add Task */}
-      <div style={{ display: "flex", gap: 10, marginBottom: 20 }}>
+      <div className="task-bar">
         <input
           value={newTask}
           onChange={(e) => setNewTask(e.target.value)}
@@ -140,7 +140,7 @@ export default function App() {
       </div>
 
       {/* Board */}
-      <div style={{ display: "flex", gap: 20 }}>
+      <div className="board">
         {Object.entries(columns).map(([columnId, column]) => (
           <div
             key={columnId}
