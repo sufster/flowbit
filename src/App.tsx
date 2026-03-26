@@ -1,20 +1,7 @@
-import { useState, useEffect } from "react";
-import "./App.css";
-// ✅ Types
-type Task = {
-  id: string;
-  content: string;
-};
+import { useState } from "react";
 
-type Column = {
-  name: string;
-  items: Task[];
-};
-
-type ColumnsType = Record<string, Column>;
-
-export default function App() {
-  const [columns, setColumns] = useState<ColumnsType>({
+function App() {
+  const [columns, setColumns] = useState({
     todo: {
       name: "To Do",
       items: [
@@ -36,29 +23,13 @@ export default function App() {
   });
 
   const [newTask, setNewTask] = useState("");
-  const [activeColumn, setActiveColumn] = useState<keyof ColumnsType>("todo");
-
-  const [draggedItem, setDraggedItem] = useState<{
-    columnId: keyof ColumnsType;
-    item: Task;
-  } | null>(null);
-
-  // ✅ Load from localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem("kanban");
-    if (saved) setColumns(JSON.parse(saved));
-  }, []);
-
-  // ✅ Save to localStorage
-  useEffect(() => {
-    localStorage.setItem("kanban", JSON.stringify(columns));
-  }, [columns]);
+  const [activeColumn, setActiveColumn] = useState("todo");
+  const [draggedItem, setDraggedItem] = useState<any>(null);
 
   const addNewTask = () => {
     if (newTask.trim() === "") return;
 
     const updated = { ...columns };
-
     updated[activeColumn].items.push({
       id: Date.now().toString(),
       content: newTask
@@ -68,31 +39,23 @@ export default function App() {
     setNewTask("");
   };
 
-  const removeTask = (columnId: keyof ColumnsType, taskId: string) => {
+  const removeTask = (columnId: string, taskId: string) => {
     const updated = { ...columns };
-
     updated[columnId].items = updated[columnId].items.filter(
-      (item: Task) => item.id !== taskId
+      (item) => item.id !== taskId
     );
-
     setColumns(updated);
   };
 
-  const handleDragStart = (
-    columnId: keyof ColumnsType,
-    item: Task
-  ) => {
+  const handleDragStart = (columnId: string, item: any) => {
     setDraggedItem({ columnId, item });
   };
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragOver = (e: any) => {
     e.preventDefault();
   };
 
-  const handleDrop = (
-    e: React.DragEvent<HTMLDivElement>,
-    columnId: keyof ColumnsType
-  ) => {
+  const handleDrop = (e: any, columnId: string) => {
     e.preventDefault();
     if (!draggedItem) return;
 
@@ -110,6 +73,21 @@ export default function App() {
     setDraggedItem(null);
   };
 
+  const columnStyles: any = {
+    todo: {
+      header: "bg-gradient-to-r from-green-600 to-green-400",
+      border: "border-green-400"
+    },
+    inProgress: {
+      header: "bg-gradient-to-r from-orange-600 to-orange-400",
+      border: "border-orange-400"
+    },
+    done: {
+      header: "bg-gradient-to-r from-violet-600 to-violet-400",
+      border: "border-violet-400"
+    }
+  };
+
   return (
     <div className="app-container">
       <h1 className="title">Kanban Board</h1>
@@ -125,9 +103,7 @@ export default function App() {
 
         <select
           value={activeColumn}
-          onChange={(e) =>
-            setActiveColumn(e.target.value as keyof ColumnsType)
-          }
+          onChange={(e) => setActiveColumn(e.target.value)}
         >
           {Object.entries(columns).map(([id, col]) => (
             <option key={id} value={id}>
@@ -139,57 +115,40 @@ export default function App() {
         <button onClick={addNewTask}>Add</button>
       </div>
 
-      {/* Board */}
+      {/* Columns */}
       <div className="board">
         {Object.entries(columns).map(([columnId, column]) => (
           <div
             key={columnId}
+            className={`column ${columnStyles[columnId].border}`}
             onDragOver={handleDragOver}
-            onDrop={(e) =>
-              handleDrop(e, columnId as keyof ColumnsType)
-            }
-            style={{
-              flex: 1,
-              border: "1px solid #ccc",
-              padding: 10
-            }}
+            onDrop={(e) => handleDrop(e, columnId)}
           >
-            <h3>
-              {column.name} ({column.items.length})
-            </h3>
+            <div className={`column-header ${columnStyles[columnId].header}`}>
+              {column.name}
+              <span>{column.items.length}</span>
+            </div>
 
-            {column.items.map((item: Task) => (
-              <div
-                key={item.id}
-                draggable
-                onDragStart={() =>
-                  handleDragStart(
-                    columnId as keyof ColumnsType,
-                    item
-                  )
-                }
-                style={{
-                  background: "#eee",
-                  padding: 10,
-                  marginBottom: 10
-                }}
-              >
-                {item.content}
-                <button
-                  onClick={() =>
-                    removeTask(
-                      columnId as keyof ColumnsType,
-                      item.id
-                    )
-                  }
-                className="close">
-                  X
-                </button>
-              </div>
-            ))}
+            <div className="column-body">
+              {column.items.map((item) => (
+                <div
+                  key={item.id}
+                  className="task"
+                  draggable
+                  onDragStart={() => handleDragStart(columnId, item)}
+                >
+                  {item.content}
+                  <button onClick={() => removeTask(columnId, item.id)} className="close">
+                    X
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
     </div>
   );
 }
+
+export default App;
