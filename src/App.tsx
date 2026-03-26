@@ -159,7 +159,7 @@ export default function App() {
             </h3>
 
             {column.items.map((item: Task) => (
-              <div className="column-body"
+              <div
                 key={item.id}
                 draggable
                 onDragStart={() =>
