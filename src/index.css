@@ -1,8 +1,7 @@
 .app-container {
   padding: 20px;
   min-height: 100vh;
-  background: linear-gradient(#2f2fb5, #a1a1aa);
-  color: #251010;
+  
   font-family: sans-serif;
 }
 
