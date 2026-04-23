@@ -81,3 +81,16 @@
   border-radius: 6px;
   cursor: pointer;
 }
+
+.close {
+  padding: 5px 10px;
+  background: linear-gradient(to right, #c93a3a, #8b0e0e);
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.column-header {
+color:white;
+}
