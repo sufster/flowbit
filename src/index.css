@@ -1,96 +1,181 @@
+:root {
+  --bg1: #0f172a;
+  --bg2: #1e293b;
+
+  --card: rgba(255, 255, 255, 0.08);
+  --card-border: rgba(255, 255, 255, 0.12);
+
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+
+  --accent1: #6366f1;
+  --accent2: #a855f7;
+
+  --green: #22c55e;
+  --orange: #f97316;
+  --violet: #8b5cf6;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  font-family: "Inter", sans-serif;
+  color: var(--text);
+}
+
+/* APP WRAPPER */
 .app-container {
-  padding: 20px;
+  padding: 24px;
   min-height: 100vh;
-  background: linear-gradient(to bottom,  #00563B, #50C878);
-  font-family: sans-serif;
 }
 
+/* TITLE */
 .title {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 2.5rem;
-    color: darkcyan;
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  background: linear-gradient(to right, var(--accent1), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
+/* TASK BAR */
 .task-bar {
   display: flex;
-  gap: 10px;
-  max-width: 600px;
-  margin: 0 auto 30px;
+  gap: 12px;
+  max-width: 700px;
+  margin: 0 auto 35px;
+  padding: 12px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
 }
 
 .task-bar input,
 .task-bar select {
-  padding: 10px;
-  border-radius: 6px;
-  border: none;
   flex: 1;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  outline: none;
+}
+
+.task-bar input::placeholder {
+  color: var(--muted);
 }
 
 .task-bar button {
-  padding: 10px 20px;
-  background: linear-gradient(to right, #6366f1, #a855f7);
+  padding: 10px 18px;
+  border-radius: 8px;
   border: none;
-  color: white;
-  border-radius: 6px;
   cursor: pointer;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
+.task-bar button:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+/* BOARD */
 .board {
   display: flex;
-  gap: 20px;
-  overflow-x: auto;
+  gap: 18px;
   justify-content: center;
+  align-items: flex-start;
+  overflow-x: auto;
+  padding-bottom: 20px;
 }
 
+/* COLUMN */
 .column {
-  width: 250px;
-  background: #27272a;
-  border-radius: 10px;
-  border-top: 4px solid;
+  width: 280px;
+  min-height: 400px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
 }
 
+/* HEADER */
 .column-header {
-  padding: 10px;
-  font-weight: bold;
+  padding: 12px 14px;
+  font-weight: 600;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--card-border);
 }
 
+/* COLUMN BODY */
 .column-body {
-  padding: 10px;
-  min-height: 200px;
-  color:black;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
+/* TASK CARD */
 .task {
-  background: white;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--card-border);
+  padding: 12px;
+  border-radius: 10px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   cursor: grab;
+  transition: transform 0.15s ease, background 0.2s ease;
 }
 
+.task:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* DELETE BUTTON */
 .close {
-  padding: 5px 10px;
-  background: linear-gradient(to right, #c93a3a, #8b0e0e);
-  border: none;
-  color: white;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+  padding: 4px 8px;
   border-radius: 6px;
   cursor: pointer;
+  transition: 0.2s;
 }
 
-.close {
-  padding: 5px 10px;
-  background: linear-gradient(to right, #c93a3a, #8b0e0e);
-  border: none;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
+.close:hover {
+  background: rgba(239, 68, 68, 0.25);
 }
 
-.column-header {
-color:white;
+/* COLUMN COLORS */
+.column:nth-child(1) .column-header {
+  color: var(--green);
+}
+
+.column:nth-child(2) .column-header {
+  color: var(--orange);
+}
+
+.column:nth-child(3) .column-header {
+  color: var(--violet);
+}
+
+/* SCROLLBAR (optional nice touch) */
+.board::-webkit-scrollbar {
+  height: 8px;
+}
+
+.board::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
 }
